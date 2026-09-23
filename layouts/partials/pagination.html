@@ -1,0 +1,16 @@
+{{- if or .PrevInSection .NextInSection }}
+<nav class="lesson-pagination" aria-label="Навігація між матеріалами">
+  <div>
+    {{ with .NextInSection }}
+      <span>Попередній матеріал</span>
+      <a rel="prev" href="{{ .RelPermalink }}"><span aria-hidden="true">←</span> {{ .Title }}</a>
+    {{ end }}
+  </div>
+  <div class="lesson-pagination__next">
+    {{ with .PrevInSection }}
+      <span>Наступний матеріал</span>
+      <a rel="next" href="{{ .RelPermalink }}">{{ .Title }} <span aria-hidden="true">→</span></a>
+    {{ end }}
+  </div>
+</nav>
+{{- end }}

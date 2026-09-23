@@ -1,0 +1,16 @@
+{{ define "main" }}
+<div class="container page-shell">
+  {{ partial "breadcrumbs.html" . }}
+  <div class="course-layout">
+    {{ partial "course-navigation.html" . }}
+    <article class="course-main prose">
+      <header class="page-header page-header--compact">
+        <p class="eyebrow">Матеріал курсу</p>
+        <h1>{{ .Title }}</h1>
+        {{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
+      </header>
+      {{ .Content }}
+    </article>
+  </div>
+</div>
+{{ end }}

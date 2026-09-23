@@ -1,0 +1,74 @@
+{{ define "main" }}
+<section class="hero">
+  <div class="container hero__grid">
+    <div>
+      <p class="eyebrow">Особистий навчальний простір</p>
+      <h1>Ім'я Прізвище</h1>
+      <p class="hero__role">Викладач та автор навчальних курсів</p>
+      <p class="hero__intro">Допомагаю системно розібратися в програмуванні, математиці та алгоритмах.</p>
+      <div class="button-group">
+        <a class="button button--primary" href="{{ (site.GetPage "/courses").RelPermalink }}">Переглянути курси</a>
+        <a class="button button--secondary" href="{{ (site.GetPage "/about").RelPermalink }}">Про мене</a>
+      </div>
+    </div>
+    <div class="hero__note" aria-label="Принципи навчання">
+      <span>01</span>
+      <p>Зрозуміла теорія</p>
+      <span>02</span>
+      <p>Послідовна практика</p>
+      <span>03</span>
+      <p>Самостійне мислення</p>
+    </div>
+  </div>
+</section>
+
+<section class="section container" aria-labelledby="courses-title">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">Навчальні програми</p>
+      <h2 id="courses-title">Актуальні курси</h2>
+    </div>
+    <a class="arrow-link" href="{{ (site.GetPage "/courses").RelPermalink }}">Усі курси <span aria-hidden="true">→</span></a>
+  </div>
+  <div class="course-grid">
+    {{ range (site.GetPage "/courses").Sections.ByWeight }}
+      {{ partial "course-card.html" . }}
+    {{ end }}
+  </div>
+</section>
+
+<section class="section section--tinted">
+  <div class="container about-callout">
+    <div>
+      <p class="eyebrow">Про викладача</p>
+      <h2>Навчання з опорою на розуміння</h2>
+    </div>
+    <div>
+      <p>Це демонстраційний сайт умовного викладача. Його структура створена для відкритих курсів, де теорія пов'язана з практикою, а кожна тема має чітке місце в програмі.</p>
+      <a class="arrow-link" href="{{ (site.GetPage "/about").RelPermalink }}">Докладніше про підхід <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="section container" aria-labelledby="notes-title">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">Останні публікації</p>
+      <h2 id="notes-title">Нотатки</h2>
+    </div>
+    <a class="arrow-link" href="{{ (site.GetPage "/notes").RelPermalink }}">Усі нотатки <span aria-hidden="true">→</span></a>
+  </div>
+  <div class="notes-list">
+    {{ range first 3 (site.GetPage "/notes").RegularPages.ByDate.Reverse }}
+      <article class="note-row">
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_long" }}</time>
+        <div>
+          <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+          <p>{{ .Description }}</p>
+        </div>
+        <span aria-hidden="true">→</span>
+      </article>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

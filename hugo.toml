@@ -1,0 +1,43 @@
+baseURL = "https://example.github.io/digital-classroom/"
+locale = "uk-UA"
+defaultContentLanguage = "uk"
+title = "Особистий університет"
+enableRobotsTXT = true
+disableKinds = ["taxonomy", "term"]
+
+[params]
+  description = "Навчальні курси, лекції та нотатки викладача."
+  author = "Ім'я Прізвище"
+
+[markup]
+  [markup.highlight]
+    noClasses = false
+    lineNos = false
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = false
+
+[menus]
+  [[menus.main]]
+    name = "Головна"
+    pageRef = "/"
+    weight = 10
+  [[menus.main]]
+    name = "Про мене"
+    pageRef = "/about"
+    weight = 20
+  [[menus.main]]
+    name = "Курси"
+    pageRef = "/courses"
+    weight = 30
+  [[menus.main]]
+    name = "Нотатки"
+    pageRef = "/notes"
+    weight = 40
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+
+[pagination]
+  pagerSize = 10

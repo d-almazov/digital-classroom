@@ -1,0 +1,85 @@
+{{ define "main" }}
+{{ if .Parent.IsHome }}
+  <div class="container page-shell">
+    {{ partial "breadcrumbs.html" . }}
+    <header class="page-header page-header--compact">
+      <p class="eyebrow">Каталог</p>
+      <h1>{{ .Title }}</h1>
+      <p class="lead">{{ .Description }}</p>
+    </header>
+    <div class="prose section-intro">{{ .Content }}</div>
+    <div class="course-grid">
+      {{ range .Sections.ByWeight }}{{ partial "course-card.html" . }}{{ end }}
+    </div>
+  </div>
+{{ else if .Params.level }}
+  <div class="container page-shell">
+    {{ partial "breadcrumbs.html" . }}
+    <div class="course-layout">
+      {{ partial "course-navigation.html" . }}
+      <article class="course-main">
+        <header class="course-hero">
+          <div>
+            <p class="eyebrow">Навчальний курс</p>
+            <h1>{{ .Title }}</h1>
+            <p class="lead">{{ .Description }}</p>
+          </div>
+          <span class="status status--large">{{ .Params.status }}</span>
+        </header>
+        <dl class="course-facts">
+          <div><dt>Викладач</dt><dd>{{ .Params.instructor }}</dd></div>
+          <div><dt>Рівень</dt><dd>{{ .Params.level }}</dd></div>
+          <div><dt>Тривалість</dt><dd>{{ .Params.duration }}</dd></div>
+          <div><dt>Семестр</dt><dd>{{ .Params.semester }}</dd></div>
+        </dl>
+        <div class="prose">{{ .Content }}</div>
+        {{ with .GetPage "lectures" }}
+          <section class="course-outline" aria-labelledby="outline-title">
+            <div class="section-heading">
+              <h2 id="outline-title">Лекції курсу</h2>
+              <a class="arrow-link" href="{{ .RelPermalink }}">Переглянути всі <span aria-hidden="true">→</span></a>
+            </div>
+            <ol>
+              {{ range .RegularPages.ByWeight }}
+                <li>
+                  <a href="{{ .RelPermalink }}">
+                    <span>{{ printf "%02d" .Weight }}</span>
+                    <strong>{{ .Title }}</strong>
+                    <small>{{ .Description }}</small>
+                  </a>
+                </li>
+              {{ end }}
+            </ol>
+          </section>
+        {{ end }}
+      </article>
+    </div>
+  </div>
+{{ else }}
+  <div class="container page-shell">
+    {{ partial "breadcrumbs.html" . }}
+    <div class="course-layout">
+      {{ partial "course-navigation.html" . }}
+      <section class="course-main">
+        <header class="page-header page-header--compact">
+          <p class="eyebrow">Матеріали курсу</p>
+          <h1>{{ .Title }}</h1>
+          <p class="lead">{{ .Description }}</p>
+        </header>
+        <div class="material-list">
+          {{ range .RegularPages.ByWeight }}
+            <article>
+              <span>{{ printf "%02d" .Weight }}</span>
+              <div>
+                <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+                <p>{{ .Description }}</p>
+                {{ with .Params.due }}<small>{{ . }}</small>{{ end }}
+              </div>
+            </article>
+          {{ end }}
+        </div>
+      </section>
+    </div>
+  </div>
+{{ end }}
+{{ end }}

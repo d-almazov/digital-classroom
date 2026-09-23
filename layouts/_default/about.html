@@ -1,0 +1,13 @@
+{{ define "main" }}
+<div class="container page-shell">
+  {{ partial "breadcrumbs.html" . }}
+  <div class="about-layout">
+    <header class="page-header">
+      <p class="eyebrow">Викладач</p>
+      <h1>{{ .Title }}</h1>
+      <p class="lead">{{ .Description }}</p>
+    </header>
+    <article class="prose">{{ .Content }}</article>
+  </div>
+</div>
+{{ end }}

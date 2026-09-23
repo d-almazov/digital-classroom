@@ -1,0 +1,17 @@
+{{ define "main" }}
+<div class="container page-shell">
+  {{ partial "breadcrumbs.html" . }}
+  <div class="course-layout">
+    {{ partial "course-navigation.html" . }}
+    <article class="course-main prose">
+      <header class="page-header page-header--compact">
+        <p class="eyebrow">Лекція {{ printf "%02d" .Weight }}</p>
+        <h1>{{ .Title }}</h1>
+        {{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
+      </header>
+      {{ .Content }}
+      {{ partial "pagination.html" . }}
+    </article>
+  </div>
+</div>
+{{ end }}

@@ -1,0 +1,11 @@
+{{- if not .IsHome }}
+<nav class="breadcrumbs" aria-label="Хлібні крихти">
+  <ol>
+    <li><a href="{{ site.Home.RelPermalink }}">Головна</a></li>
+    {{- range .Ancestors.Reverse }}
+      {{- if not .IsHome }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
+    {{- end }}
+    <li aria-current="page">{{ .Title }}</li>
+  </ol>
+</nav>
+{{- end }}

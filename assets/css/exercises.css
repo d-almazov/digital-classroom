@@ -1,0 +1,297 @@
+.python-exercise {
+  --exercise-error: #9b2f2f;
+  --exercise-error-bg: #f8e8e5;
+  --exercise-success: #17633f;
+  --exercise-success-bg: #e1f0e8;
+  max-width: 100%;
+  margin-block: 3.5rem;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--accent);
+  background: var(--surface);
+}
+
+.python-exercise__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  gap: 1.5rem;
+}
+
+.python-exercise h2,
+.python-exercise h3 {
+  margin-top: 0;
+}
+
+.python-exercise__header h2 {
+  margin-bottom: 0;
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+}
+
+.python-exercise__status {
+  display: inline-flex;
+  max-width: 14rem;
+  margin: 0;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.35;
+  text-align: right;
+}
+
+.python-exercise__status::before {
+  width: 0.55rem;
+  height: 0.55rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--border);
+  content: "";
+}
+
+.python-exercise__status[data-state="loading"]::before {
+  background: var(--focus);
+  animation: exercise-pulse 1.2s ease-in-out infinite;
+}
+
+.python-exercise__status[data-state="ready"]::before {
+  background: var(--exercise-success);
+}
+
+.python-exercise__status[data-state="error"]::before {
+  background: var(--exercise-error);
+}
+
+.python-exercise__task {
+  margin-bottom: 1.5rem;
+}
+
+.python-exercise__task > :last-child {
+  margin-bottom: 0;
+}
+
+.python-exercise__editor label {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.python-exercise__editor textarea {
+  display: block;
+  width: 100%;
+  min-height: 13rem;
+  resize: vertical;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0;
+  background: var(--code-bg);
+  color: var(--code-text);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  tab-size: 4;
+}
+
+.python-exercise__editor textarea:focus-visible {
+  border-color: var(--focus);
+}
+
+.python-exercise__help {
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.python-exercise__actions {
+  display: flex;
+  margin-block: 1rem 1.75rem;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.python-exercise .button {
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.88rem;
+}
+
+.python-exercise .button--quiet {
+  border-color: var(--border);
+  background: transparent;
+  color: var(--muted);
+}
+
+.python-exercise .button:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+.python-exercise__result h3 {
+  margin-bottom: 0.45rem;
+  font-size: 0.85rem;
+}
+
+.python-exercise__result > pre,
+.python-exercise__comparison pre {
+  min-height: 5rem;
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.python-exercise__feedback {
+  margin-top: 0.85rem;
+  padding: 0;
+}
+
+.python-exercise__feedback:not(:empty) {
+  padding: 0.9rem 1rem;
+  border-left: 4px solid currentColor;
+}
+
+.python-exercise__feedback[data-state="success"] {
+  background: var(--exercise-success-bg);
+  color: var(--exercise-success);
+}
+
+.python-exercise__feedback[data-state="error"] {
+  background: var(--exercise-error-bg);
+  color: var(--exercise-error);
+}
+
+.python-exercise__feedback p {
+  margin: 0.25rem 0 0;
+}
+
+.python-exercise__comparison {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 1rem;
+  gap: 0.75rem;
+}
+
+.python-exercise__comparison span {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.python-exercise__comparison pre {
+  min-height: 0;
+  color: var(--code-text);
+}
+
+.python-exercise__footer {
+  display: flex;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.python-exercise__reveals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1rem;
+}
+
+.python-exercise__reveals details {
+  position: relative;
+}
+
+.python-exercise__reveals summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.python-exercise__reveal-content,
+.python-exercise__solution {
+  width: min(34rem, calc(100vw - 4rem));
+  margin-top: 0.65rem;
+  padding: 0.85rem;
+  border: 1px solid var(--border);
+  background: var(--surface-muted);
+  color: var(--text);
+}
+
+.python-exercise__reveal-content > :last-child,
+.python-exercise__solution > :last-child {
+  margin-bottom: 0;
+}
+
+.python-exercise__solution p {
+  margin-bottom: 0.5rem;
+  font-size: 0.84rem;
+}
+
+.python-exercise__solution pre {
+  margin: 0;
+}
+
+.python-exercise__next {
+  flex: 0 0 auto;
+  font-size: 0.86rem;
+}
+
+@keyframes exercise-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .python-exercise {
+    --exercise-error: #f2a19a;
+    --exercise-error-bg: #3c2422;
+    --exercise-success: #91d4b1;
+    --exercise-success-bg: #1c382b;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .python-exercise__status[data-state="loading"]::before {
+    animation: none;
+  }
+}
+
+@media (max-width: 38rem) {
+  .python-exercise {
+    margin-inline: -0.25rem;
+    padding: 1rem;
+  }
+
+  .python-exercise__header,
+  .python-exercise__footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .python-exercise__status {
+    max-width: none;
+    text-align: left;
+  }
+
+  .python-exercise__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .python-exercise__actions .button {
+    width: 100%;
+  }
+
+  .python-exercise__actions .button--quiet {
+    grid-column: 1 / -1;
+  }
+
+  .python-exercise__comparison {
+    grid-template-columns: 1fr;
+  }
+}

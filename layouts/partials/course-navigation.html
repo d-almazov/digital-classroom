@@ -1,0 +1,39 @@
+{{- $current := . -}}
+{{- $course := . -}}
+{{- /* Resolve the course by walking ancestors; course pages carry level metadata. */ -}}
+{{- range $current.Ancestors }}
+  {{- if .Params.level }}{{ $course = . }}{{ end }}
+{{- end }}
+<aside class="course-sidebar" aria-label="Навігація курсу">
+  <details class="course-nav">
+    <summary>Навігація курсу</summary>
+    <div class="course-nav__inner">
+      <p class="course-nav__eyebrow">Курс</p>
+      <a class="course-nav__title" href="{{ $course.RelPermalink }}">{{ $course.Params.shortTitle | default $course.Title }}</a>
+      <nav aria-label="Розділи курсу">
+        <ul>
+          <li><a href="{{ $course.RelPermalink }}"{{ if eq $current.RelPermalink $course.RelPermalink }} aria-current="page"{{ end }}>Огляд</a></li>
+          {{ with $course.GetPage "syllabus" }}
+            <li><a href="{{ .RelPermalink }}"{{ if eq $current.RelPermalink .RelPermalink }} aria-current="page"{{ end }}>Силабус</a></li>
+          {{ end }}
+          {{ with $course.GetPage "lectures" }}
+            <li>
+              <a href="{{ .RelPermalink }}"{{ if eq $current.RelPermalink .RelPermalink }} aria-current="page"{{ end }}>Лекції</a>
+              <ol class="course-nav__lessons">
+                {{ range .RegularPages.ByWeight }}
+                  <li><a href="{{ .RelPermalink }}"{{ if eq $current.RelPermalink .RelPermalink }} aria-current="page"{{ end }}><span>{{ printf "%02d" .Weight }}</span>{{ .Title }}</a></li>
+                {{ end }}
+              </ol>
+            </li>
+          {{ end }}
+          {{ with $course.GetPage "assignments" }}
+            <li><a href="{{ .RelPermalink }}"{{ if eq $current.RelPermalink .RelPermalink }} aria-current="page"{{ end }}>Завдання</a></li>
+          {{ end }}
+          {{ with $course.GetPage "resources" }}
+            <li><a href="{{ .RelPermalink }}"{{ if eq $current.RelPermalink .RelPermalink }} aria-current="page"{{ end }}>Ресурси</a></li>
+          {{ end }}
+        </ul>
+      </nav>
+    </div>
+  </details>
+</aside>

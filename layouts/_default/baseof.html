@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {{- $description := .Description | default .Summary | default site.Params.description -}}
+  <title>{{ if not .IsHome }}{{ .Title }} · {{ end }}{{ site.Title }}</title>
+  <meta name="description" content="{{ $description }}">
+  <meta name="author" content="{{ site.Params.author }}">
+  <link rel="canonical" href="{{ .Permalink }}">
+  <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+  <meta property="og:title" content="{{ .Title | default site.Title }}">
+  <meta property="og:description" content="{{ $description }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:site_name" content="{{ site.Title }}">
+  <meta name="twitter:card" content="summary">
+  {{- $css := slice
+    (resources.Get "css/typography.css")
+    (resources.Get "css/layout.css")
+    (resources.Get "css/components.css")
+    (resources.Get "css/course.css")
+    (resources.Get "css/exercises.css")
+    | resources.Concat "css/site.css"
+    | minify
+    | fingerprint -}}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Перейти до основного вмісту</a>
+  {{ partial "header.html" . }}
+  <main id="main-content">
+    {{ block "main" . }}{{ end }}
+  </main>
+  {{ partial "footer.html" . }}
+  {{- if .Store.Get "hasPythonExercise" }}
+    {{- $exerciseScript := resources.Get "js/python-exercises.js" | minify | fingerprint -}}
+    <script src="{{ $exerciseScript.RelPermalink }}" integrity="{{ $exerciseScript.Data.Integrity }}" defer></script>
+  {{- end }}
+</body>
+</html>

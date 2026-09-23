@@ -1,0 +1,27 @@
+{{ define "main" }}
+<div class="container page-shell">
+  {{ partial "breadcrumbs.html" . }}
+  <div class="course-layout">
+    {{ partial "course-navigation.html" . }}
+    <section class="course-main">
+      <header class="page-header page-header--compact">
+        <p class="eyebrow">Практика</p>
+        <h1>{{ .Title }}</h1>
+        <p class="lead">{{ .Description }}</p>
+      </header>
+      <div class="material-list">
+        {{ range .RegularPages.ByWeight }}
+          <article>
+            <span>{{ printf "%02d" .Weight }}</span>
+            <div>
+              <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+              <p>{{ .Description }}</p>
+              {{ with .Params.due }}<small>{{ . }}</small>{{ end }}
+            </div>
+          </article>
+        {{ end }}
+      </div>
+    </section>
+  </div>
+</div>
+{{ end }}

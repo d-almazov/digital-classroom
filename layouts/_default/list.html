@@ -1,0 +1,23 @@
+{{ define "main" }}
+<div class="container page-shell">
+  {{ partial "breadcrumbs.html" . }}
+  <header class="page-header page-header--compact">
+    <p class="eyebrow">Бібліотека матеріалів</p>
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
+  </header>
+  {{ with .Content }}<div class="prose section-intro">{{ . }}</div>{{ end }}
+  <div class="notes-list">
+    {{ range .RegularPages.ByDate.Reverse }}
+      <article class="note-row">
+        {{ if not .Date.IsZero }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_long" }}</time>{{ end }}
+        <div>
+          <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+          {{ with .Description }}<p>{{ . }}</p>{{ end }}
+        </div>
+        <span aria-hidden="true">→</span>
+      </article>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

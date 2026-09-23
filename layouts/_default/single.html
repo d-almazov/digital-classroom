@@ -1,0 +1,13 @@
+{{ define "main" }}
+<div class="container page-shell">
+  {{ partial "breadcrumbs.html" . }}
+  <article class="prose page-article">
+    <header class="page-header">
+      <p class="eyebrow">Особистий університет</p>
+      <h1>{{ .Title }}</h1>
+      {{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
+    </header>
+    {{ .Content }}
+  </article>
+</div>
+{{ end }}

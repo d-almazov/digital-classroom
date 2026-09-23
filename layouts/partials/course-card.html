@@ -1,0 +1,15 @@
+{{- $course := . -}}
+{{- $lectures := $course.GetPage "lectures" -}}
+<article class="course-card">
+  <div class="course-card__meta">
+    <span class="status">{{ $course.Params.status | default "Доступний" }}</span>
+    {{ with $course.Params.level }}<span>{{ . }}</span>{{ end }}
+  </div>
+  <h3><a href="{{ $course.RelPermalink }}">{{ $course.Title }}</a></h3>
+  <p>{{ $course.Description }}</p>
+  <div class="course-card__footer">
+    {{ with $lectures }}<span>{{ len .RegularPages }} {{ if eq (len .RegularPages) 1 }}лекція{{ else }}лекцій{{ end }}</span>{{ end }}
+    {{ with $course.Params.duration }}<span>{{ . }}</span>{{ end }}
+    <a class="arrow-link" href="{{ $course.RelPermalink }}">До курсу <span aria-hidden="true">→</span></a>
+  </div>
+</article>

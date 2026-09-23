@@ -1,0 +1,85 @@
+{{- $id := .Get "id" -}}
+{{- $title := .Get "title" | default "Інтерактивна вправа" -}}
+{{- $starter := .Get "starter" | default "" -}}
+{{- $expected := .Get "expected-output" | default "" -}}
+{{- $hint := .Get "hint" -}}
+{{- $solution := .Get "solution" -}}
+{{- $next := .Get "next" -}}
+{{- if not $id }}{{ errorf "Shortcode python-exercise requires an id on %s" .Page.File.Path }}{{ end -}}
+{{- .Page.Store.Set "hasPythonExercise" true -}}
+
+<section class="python-exercise" id="{{ $id }}" data-python-exercise data-worker-url="{{ "js/python-exercise-worker.js" | relURL }}">
+  <header class="python-exercise__header">
+    <div>
+      <p class="eyebrow">Інтерактивна практика</p>
+      <h2>{{ $title }}</h2>
+    </div>
+    <p class="python-exercise__status" data-runtime-status role="status" aria-live="polite">
+      Python завантажиться після першого запуску
+    </p>
+  </header>
+
+  <div class="python-exercise__task">
+    {{ .Page.RenderString .Inner }}
+  </div>
+
+  <div class="python-exercise__editor">
+    <label for="{{ $id }}-code">Код Python</label>
+    <textarea
+      id="{{ $id }}-code"
+      data-code-editor
+      rows="10"
+      spellcheck="false"
+      autocapitalize="off"
+      autocomplete="off"
+      aria-describedby="{{ $id }}-editor-help"
+    >{{ $starter }}</textarea>
+    <p class="python-exercise__help" id="{{ $id }}-editor-help">Пишіть код у полі, а потім запустіть або перевірте його.</p>
+  </div>
+
+  <div class="python-exercise__actions" aria-label="Дії з кодом">
+    <button class="button button--primary" type="button" data-action="run">
+      <span aria-hidden="true">▶</span> Запустити
+    </button>
+    <button class="button button--secondary" type="button" data-action="check">
+      <span aria-hidden="true">✓</span> Перевірити
+    </button>
+    <button class="button button--quiet" type="button" data-action="reset">
+      <span aria-hidden="true">↻</span> Скинути
+    </button>
+  </div>
+
+  <div class="python-exercise__result">
+    <h3>Результат</h3>
+    <pre data-output tabindex="0" aria-label="Результат виконання програми">Код ще не запускався.</pre>
+    <div class="python-exercise__feedback" data-feedback role="status" aria-live="polite"></div>
+  </div>
+
+  {{- if or $hint $solution $next }}
+  <footer class="python-exercise__footer">
+    <div class="python-exercise__reveals">
+      {{- with $hint }}
+      <details>
+        <summary>Показати підказку</summary>
+        <div class="python-exercise__reveal-content">{{ . | markdownify }}</div>
+      </details>
+      {{- end }}
+      {{- with $solution }}
+      <details>
+        <summary>Показати розв'язання</summary>
+        <div class="python-exercise__solution">
+          <p>Один із можливих варіантів:</p>
+          <pre><code>{{ . }}</code></pre>
+        </div>
+      </details>
+      {{- end }}
+    </div>
+    {{- with $next }}
+      <a class="arrow-link python-exercise__next" href="#{{ . }}">Наступна вправа <span aria-hidden="true">→</span></a>
+    {{- end }}
+  </footer>
+  {{- end }}
+
+  <script type="application/json" data-starter-code>{{ $starter | jsonify | safeJS }}</script>
+  <script type="application/json" data-expected-output>{{ $expected | jsonify | safeJS }}</script>
+</section>
